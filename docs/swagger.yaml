@@ -1,0 +1,90 @@
+basePath: /
+definitions:
+  article.Article:
+    properties:
+      body:
+        type: string
+      date:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  article.ArticleCreateDto:
+    properties:
+      body:
+        type: string
+      title:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: support@swagger.io
+    name: Nadun Indunil
+    url: http://www.swagger.io/support
+  description: This is a sample api.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Article API
+  version: "1.0"
+paths:
+  /articles:
+    get:
+      operationId: get-all-articles
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/article.Article'
+      summary: get all articles
+    post:
+      operationId: create-article
+      parameters:
+      - description: article data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/article.ArticleCreateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/article.Article'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: add a new article
+  /articles/{id}:
+    get:
+      operationId: get-article
+      parameters:
+      - description: article ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/article.Article'
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: get a article
+swagger: "2.0"
