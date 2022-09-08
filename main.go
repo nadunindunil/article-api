@@ -1,17 +1,21 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/swagger"
 	"github.com/nadunindunil/article-api/article"
 	_ "github.com/nadunindunil/article-api/docs"
+	"github.com/nadunindunil/article-api/tag"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-func Routers(app *fiber.App) {
-	app.Get("/articles", article.GetAll)
-	app.Post("/articles", article.Create)
-	app.Get("/articles/:id", article.GetOne)
-}
+var DB *gorm.DB
+var err error
+
+const DSN = "host=localhost user=postgres password=mysecretpassword dbname=articledb port=5432 sslmode=disable"
 
 // @title          Article API
 // @version        1.0
@@ -28,10 +32,16 @@ func Routers(app *fiber.App) {
 // @host     localhost:3000
 // @BasePath /
 func main() {
-	article.InitialMigration()
+	DB, err = gorm.Open(postgres.Open(DSN), &gorm.Config{})
+	if err != nil {
+		fmt.Println(err.Error())
+		panic("Couldn't connect to the DB!")
+	}
+
 	app := fiber.New()
 
-	Routers(app)
+	article.Init(DB, app)
+	tag.Init(DB, app)
 
 	app.Get("/swagger/*", swagger.HandlerDefault) // default
 

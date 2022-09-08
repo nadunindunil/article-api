@@ -20,6 +20,22 @@ definitions:
       title:
         type: string
     type: object
+  tag.Tag:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  tag.TagCreateDto:
+    properties:
+      name:
+        type: string
+    type: object
 host: localhost:3000
 info:
   contact:
@@ -87,4 +103,36 @@ paths:
           schema:
             type: string
       summary: get a article
+  /tags:
+    get:
+      operationId: get-all-tags
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.Tag'
+      summary: get all tags
+    post:
+      operationId: create-tag
+      parameters:
+      - description: tag data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/tag.TagCreateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.Tag'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: add a new tag
 swagger: "2.0"
