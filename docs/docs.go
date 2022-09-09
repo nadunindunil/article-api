@@ -68,7 +68,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/article.ArticleResponseDto"
+                            "type": "string"
                         }
                     },
                     "400": {
@@ -184,7 +184,7 @@ const docTemplate = `{
                 "tags": [
                     "tags"
                 ],
-                "summary": "get tags by name and datte",
+                "summary": "get tags by name and date",
                 "operationId": "get-tags-by-name-and-date",
                 "parameters": [
                     {

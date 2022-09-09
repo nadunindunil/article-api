@@ -98,7 +98,7 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/article.ArticleResponseDto'
+            type: string
         "400":
           description: Bad Request
           schema:
@@ -190,7 +190,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/tag.Tag'
-      summary: get tags by name and datte
+      summary: get tags by name and date
       tags:
       - tags
 swagger: "2.0"

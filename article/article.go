@@ -69,7 +69,7 @@ func getAll(c *fiber.Ctx) error {
 // @Tags articles
 // @Produce json
 // @Param data body ArticleCreateDto true "article data"
-// @Success 201 {object} ArticleResponseDto
+// @Success 201 {string} message
 // @Failure 400 {string} message
 // @Failure 500 {string} message
 // @Router /articles [post]
