@@ -94,7 +94,7 @@ const docTemplate = `{
                 "tags": [
                     "articles"
                 ],
-                "summary": "get a article",
+                "summary": "get an article",
                 "operationId": "get-article",
                 "parameters": [
                     {
@@ -224,8 +224,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "body": {
-                    "type": "string",
-                    "example": "Article Body"
+                    "type": "string"
                 },
                 "date": {
                     "type": "string",
@@ -238,8 +237,7 @@ const docTemplate = `{
                     }
                 },
                 "title": {
-                    "type": "string",
-                    "example": "Article Title"
+                    "type": "string"
                 }
             }
         },

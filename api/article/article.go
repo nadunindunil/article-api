@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/nadunindunil/article-api/api/common"
 	"github.com/nadunindunil/article-api/api/tag"
 	"gorm.io/datatypes"
 	"gorm.io/gorm"
@@ -15,9 +16,9 @@ type Article struct {
 	ID        int            `gorm:"primaryKey" json:"id"`
 	CreatedAt time.Time      `json:"createdAt"`
 	UpdatedAt time.Time      `json:"updatedAt"`
-	Date      datatypes.Date `json:"date"`
-	Title     string         `json:"title"`
-	Body      string         `json:"body"`
+	Date      datatypes.Date `json:"date" validate:"required"`
+	Title     string         `json:"title" example:"Article Title" validate:"required,min=3,max=32"`
+	Body      string         `json:"body" example:"Article Body" validate:"required,min=3,max=500"`
 	Tags      []tag.Tag      `json:"tags" gorm:"many2many:article_tag_association;"`
 }
 
@@ -26,8 +27,8 @@ type TagDto struct {
 }
 
 type ArticleCreateDto struct {
-	Title string   `json:"title" example:"Article Title"`
-	Body  string   `json:"body" example:"Article Body"`
+	Title string   `json:"title"`
+	Body  string   `json:"body"`
 	Tags  []TagDto `json:"tags"`
 	Date  string   `json:"date" example:"2022-04-23T00:00:00Z"`
 }
@@ -79,13 +80,19 @@ func create(c *fiber.Ctx) error {
 	if err := c.BodyParser(&article); err != nil {
 		return c.Status(400).SendString(err.Error())
 	}
+
+	errors := common.ValidateStruct(*article)
+	if errors != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(errors)
+	}
+
 	if err := DB.Save(&article); err.Error != nil {
 		return c.Status(500).SendString(err.Error.Error())
 	}
 	return c.SendStatus(201)
 }
 
-// @Summary get a article
+// @Summary get an article
 // @ID get-article
 // @Tags articles
 // @Produce json

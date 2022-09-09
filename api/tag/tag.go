@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/nadunindunil/article-api/api/common"
 	"gorm.io/gorm"
 )
 
@@ -13,7 +14,7 @@ type Tag struct {
 	ID        int       `json:"id" gorm:"primaryKey" `
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
-	Name      string    `json:"name" gorm:"not null;unique" `
+	Name      string    `json:"name" gorm:"not null;unique" validate:"required,min=3,max=10"`
 }
 
 type TagCreateDto struct {
@@ -70,6 +71,12 @@ func create(c *fiber.Ctx) error {
 	if err := c.BodyParser(&tag); err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
+
+	errors := common.ValidateStruct(*tag)
+	if errors != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(errors)
+	}
+
 	if err := DB.Save(&tag); err.Error != nil {
 		return c.Status(500).SendString(err.Error.Error())
 	}

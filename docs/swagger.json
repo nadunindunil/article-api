@@ -87,7 +87,7 @@
                 "tags": [
                     "articles"
                 ],
-                "summary": "get a article",
+                "summary": "get an article",
                 "operationId": "get-article",
                 "parameters": [
                     {
@@ -217,8 +217,7 @@
             "type": "object",
             "properties": {
                 "body": {
-                    "type": "string",
-                    "example": "Article Body"
+                    "type": "string"
                 },
                 "date": {
                     "type": "string",
@@ -231,8 +230,7 @@
                     }
                 },
                 "title": {
-                    "type": "string",
-                    "example": "Article Title"
+                    "type": "string"
                 }
             }
         },

@@ -3,7 +3,6 @@ definitions:
   article.ArticleCreateDto:
     properties:
       body:
-        example: Article Body
         type: string
       date:
         example: "2022-04-23T00:00:00Z"
@@ -13,7 +12,6 @@ definitions:
           $ref: '#/definitions/article.TagDto'
         type: array
       title:
-        example: Article Title
         type: string
     type: object
   article.ArticleResponseDto:
@@ -130,7 +128,7 @@ paths:
           description: Not Found
           schema:
             type: string
-      summary: get a article
+      summary: get an article
       tags:
       - articles
   /tags:
