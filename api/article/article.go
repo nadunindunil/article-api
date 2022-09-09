@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/nadunindunil/article-api/tag"
+	"github.com/nadunindunil/article-api/api/tag"
 	"gorm.io/datatypes"
 	"gorm.io/gorm"
 )

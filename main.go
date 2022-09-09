@@ -7,10 +7,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/swagger"
-	"github.com/nadunindunil/article-api/article"
+	"github.com/nadunindunil/article-api/api/article"
+	"github.com/nadunindunil/article-api/api/tag"
 	"github.com/nadunindunil/article-api/config"
 	_ "github.com/nadunindunil/article-api/docs"
-	"github.com/nadunindunil/article-api/tag"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
