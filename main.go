@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/swagger"
 	"github.com/nadunindunil/article-api/article"
+	"github.com/nadunindunil/article-api/config"
 	_ "github.com/nadunindunil/article-api/docs"
 	"github.com/nadunindunil/article-api/tag"
 	"gorm.io/driver/postgres"
@@ -14,8 +16,6 @@ import (
 
 var DB *gorm.DB
 var err error
-
-const DSN = "host=localhost user=postgres password=mysecretpassword dbname=articledb port=5432 sslmode=disable"
 
 // @title          Article API
 // @version        1.0
@@ -32,7 +32,13 @@ const DSN = "host=localhost user=postgres password=mysecretpassword dbname=artic
 // @host     localhost:3000
 // @BasePath /
 func main() {
-	DB, err = gorm.Open(postgres.Open(DSN), &gorm.Config{})
+	c, error := config.LoadConfig()
+	if error != nil {
+		log.Fatalln("Failed at config", error)
+	}
+
+	url := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", c.DBUser, c.DBPass, c.DBHost, c.DBPort, c.DBName)
+	DB, err = gorm.Open(postgres.Open(url), &gorm.Config{})
 	if err != nil {
 		fmt.Println(err.Error())
 		panic("Couldn't connect to the DB!")
@@ -45,5 +51,5 @@ func main() {
 
 	app.Get("/swagger/*", swagger.HandlerDefault) // default
 
-	app.Listen(":3000")
+	app.Listen(c.Port)
 }

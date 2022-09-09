@@ -12,7 +12,7 @@ import (
 var DB *gorm.DB
 
 type Article struct {
-	ID        uint           `gorm:"primaryKey" json:"id"`
+	ID        int            `gorm:"primaryKey" json:"id"`
 	CreatedAt time.Time      `json:"createdAt"`
 	UpdatedAt time.Time      `json:"updatedAt"`
 	Date      datatypes.Date `json:"date"`
@@ -22,7 +22,7 @@ type Article struct {
 }
 
 type TagDto struct {
-	ID uint `json:"id"`
+	ID int `json:"id"`
 }
 
 type ArticleCreateDto struct {
@@ -33,7 +33,7 @@ type ArticleCreateDto struct {
 }
 
 type ArticleResponseDto struct {
-	ID        uint      `json:"id"`
+	ID        int       `json:"id"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 	Date      time.Time `json:"date"`

@@ -28,3 +28,6 @@
 vendor/
 vendor
 /Godeps/
+
+# env files
+.env

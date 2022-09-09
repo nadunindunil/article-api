@@ -10,7 +10,7 @@ import (
 var DB *gorm.DB
 
 type Tag struct {
-	ID        uint      `json:"id" gorm:"primaryKey" `
+	ID        int       `json:"id" gorm:"primaryKey" `
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 	Name      string    `json:"name" gorm:"not null;unique" `
@@ -22,7 +22,7 @@ type TagCreateDto struct {
 
 type TagByNameDateResponseDto struct {
 	Tag         string   `json:"tag"`
-	Count       uint     `json:"count"`
+	Count       int      `json:"count"`
 	Articles    []int    `json:"articles"`
 	RelatedTags []string `json:"related_tags"`
 }
@@ -77,7 +77,7 @@ func create(c *fiber.Ctx) error {
 	return c.JSON(&tag)
 }
 
-// @Summary get tags by name and datte
+// @Summary get tags by name and date
 // @ID get-tags-by-name-and-date
 // @Tags tags
 // @Produce json
@@ -139,9 +139,9 @@ func getTagsByNameAndDate(c *fiber.Ctx) error {
 		return c.Status(500).SendString(err.Error.Error())
 	}
 
-	var count uint
+	var count int
 	if count = 0; len(results) > 0 {
-		count = uint(results[0].FullCount)
+		count = int(results[0].FullCount)
 	}
 
 	response := TagByNameDateResponseDto{

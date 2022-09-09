@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:14.2
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: articledb
+    ports:
+      - "5432:5432"
+    volumes: 
+      - dbdata:/var/lib/postgresql/data
+
+  api:
+    container_name: article-api
+    build:
+      context: .
+    environment:
+      DB_USER: postgres
+      DB_PASS: mysecretpassword
+      DB_NAME: articledb
+      DB_HOST: postgres
+    links:
+      - postgres
+    depends_on: 
+      - postgres
+    #     condition: service_healthy # waiting until heathcheck of postgres is good
+    ports:
+      - "3000:3000"
+
+volumes:
+  dbdata: # persist database
