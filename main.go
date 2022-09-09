@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/swagger"
 	"github.com/nadunindunil/article-api/article"
 	"github.com/nadunindunil/article-api/config"
@@ -46,10 +47,12 @@ func main() {
 
 	app := fiber.New()
 
+	app.Use(logger.New())
+
 	article.Init(DB, app)
 	tag.Init(DB, app)
 
 	app.Get("/swagger/*", swagger.HandlerDefault) // default
 
-	app.Listen(c.Port)
+	log.Fatal(app.Listen(c.Port))
 }

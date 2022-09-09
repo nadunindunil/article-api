@@ -7,6 +7,8 @@
 
 ## Development
 
+update .env file in the directory root with db credentials
+
 ```
 go mod download
 go run main.go
@@ -22,7 +24,7 @@ swag init
 ```
 to generate swagger files
 
-to start the application using docker-compose
+to start the application using **docker-compose**
 
 run
 
