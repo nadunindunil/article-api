@@ -45,9 +45,13 @@ definitions:
       id:
         type: integer
       name:
+        maxLength: 10
+        minLength: 3
         type: string
       updatedAt:
         type: string
+    required:
+    - name
     type: object
   tag.TagCreateDto:
     properties:

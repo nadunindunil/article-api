@@ -280,6 +280,9 @@ const docTemplate = `{
         },
         "tag.Tag": {
             "type": "object",
+            "required": [
+                "name"
+            ],
             "properties": {
                 "createdAt": {
                     "type": "string"
@@ -288,7 +291,9 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 10,
+                    "minLength": 3
                 },
                 "updatedAt": {
                     "type": "string"
