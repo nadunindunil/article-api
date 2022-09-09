@@ -169,7 +169,7 @@ paths:
       summary: add a new tag
       tags:
       - tags
-  /tags/{name}/date/{date}:
+  /tags/{name}/{date}:
     get:
       operationId: get-tags-by-name-and-date
       parameters:
@@ -190,6 +190,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/tag.Tag'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
       summary: get tags by name and date
       tags:
       - tags

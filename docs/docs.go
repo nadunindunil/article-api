@@ -176,7 +176,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/tags/{name}/date/{date}": {
+        "/tags/{name}/{date}": {
             "get": {
                 "produces": [
                     "application/json"
@@ -207,6 +207,12 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/tag.Tag"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }

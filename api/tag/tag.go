@@ -41,7 +41,7 @@ func Init(gormdb *gorm.DB, app *fiber.App) {
 
 	app.Get("/tags", getAll)
 	app.Post("/tags", create)
-	app.Get("/tags/:name/date/:date", getTagsByNameAndDate)
+	app.Get("/tags/:name/:date", getTagsByNameAndDate)
 }
 
 // @Summary get all tags
@@ -84,7 +84,8 @@ func create(c *fiber.Ctx) error {
 // @Param name path string true "tag name"
 // @Param date path string true "date"
 // @Success 200 {object} Tag
-// @Router /tags/{name}/date/{date} [get]
+// @Failure 500 {string} message
+// @Router /tags/{name}/{date} [get]
 func getTagsByNameAndDate(c *fiber.Ctx) error {
 	dateString := "20060102"
 
