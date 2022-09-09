@@ -1,24 +1,44 @@
 basePath: /
 definitions:
-  article.Article:
+  article.ArticleCreateDto:
     properties:
       body:
+        example: Article Body
+        type: string
+      date:
+        example: "2022-04-23T00:00:00Z"
+        type: string
+      tags:
+        items:
+          $ref: '#/definitions/article.TagDto'
+        type: array
+      title:
+        example: Article Title
+        type: string
+    type: object
+  article.ArticleResponseDto:
+    properties:
+      body:
+        type: string
+      createdAt:
         type: string
       date:
         type: string
       id:
         type: integer
+      tags:
+        items:
+          $ref: '#/definitions/tag.Tag'
+        type: array
       title:
         type: string
       updatedAt:
         type: string
     type: object
-  article.ArticleCreateDto:
+  article.TagDto:
     properties:
-      body:
-        type: string
-      title:
-        type: string
+      id:
+        type: integer
     type: object
   tag.Tag:
     properties:
@@ -39,9 +59,9 @@ definitions:
 host: localhost:3000
 info:
   contact:
-    email: support@swagger.io
+    email: nadun1indunil@gmail.com
     name: Nadun Indunil
-    url: http://www.swagger.io/support
+    url: https://www.linkedin.com/in/nadunindunil/
   description: This is a sample api.
   license:
     name: Apache 2.0
@@ -59,8 +79,10 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/article.Article'
+            $ref: '#/definitions/article.ArticleResponseDto'
       summary: get all articles
+      tags:
+      - articles
     post:
       operationId: create-article
       parameters:
@@ -73,15 +95,21 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
-            $ref: '#/definitions/article.Article'
+            $ref: '#/definitions/article.ArticleResponseDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
         "500":
           description: Internal Server Error
           schema:
             type: string
       summary: add a new article
+      tags:
+      - articles
   /articles/{id}:
     get:
       operationId: get-article
@@ -97,12 +125,14 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/article.Article'
+            $ref: '#/definitions/article.ArticleResponseDto'
         "404":
           description: Not Found
           schema:
             type: string
       summary: get a article
+      tags:
+      - articles
   /tags:
     get:
       operationId: get-all-tags
@@ -114,6 +144,8 @@ paths:
           schema:
             $ref: '#/definitions/tag.Tag'
       summary: get all tags
+      tags:
+      - tags
     post:
       operationId: create-tag
       parameters:
@@ -135,4 +167,30 @@ paths:
           schema:
             type: string
       summary: add a new tag
+      tags:
+      - tags
+  /tags/{name}/date/{date}:
+    get:
+      operationId: get-tags-by-name-and-date
+      parameters:
+      - description: tag name
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: date
+        in: path
+        name: date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.Tag'
+      summary: get tags by name and datte
+      tags:
+      - tags
 swagger: "2.0"

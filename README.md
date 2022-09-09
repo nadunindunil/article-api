@@ -7,5 +7,8 @@ go1.19
 ## Development
 
 ```
-go run main
+go mod download
+go run main.go
 ```
+
+Find the swagger file in http://localhost:3000/swagger/index.html

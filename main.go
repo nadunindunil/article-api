@@ -23,8 +23,8 @@ const DSN = "host=localhost user=postgres password=mysecretpassword dbname=artic
 // @termsOfService http://swagger.io/terms/
 
 // @contact.name  Nadun Indunil
-// @contact.url   http://www.swagger.io/support
-// @contact.email support@swagger.io
+// @contact.url   https://www.linkedin.com/in/nadunindunil/
+// @contact.email nadun1indunil@gmail.com
 
 // @license.name Apache 2.0
 // @license.url  http://www.apache.org/licenses/LICENSE-2.0.html

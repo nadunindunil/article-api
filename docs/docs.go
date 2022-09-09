@@ -13,8 +13,8 @@ const docTemplate = `{
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "Nadun Indunil",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
+            "url": "https://www.linkedin.com/in/nadunindunil/",
+            "email": "nadun1indunil@gmail.com"
         },
         "license": {
             "name": "Apache 2.0",
@@ -30,13 +30,16 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "articles"
+                ],
                 "summary": "get all articles",
                 "operationId": "get-all-articles",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/article.Article"
+                            "$ref": "#/definitions/article.ArticleResponseDto"
                         }
                     }
                 }
@@ -44,6 +47,9 @@ const docTemplate = `{
             "post": {
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "articles"
                 ],
                 "summary": "add a new article",
                 "operationId": "create-article",
@@ -59,10 +65,16 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/article.Article"
+                            "$ref": "#/definitions/article.ArticleResponseDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
                         }
                     },
                     "500": {
@@ -79,6 +91,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "articles"
+                ],
                 "summary": "get a article",
                 "operationId": "get-article",
                 "parameters": [
@@ -94,7 +109,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/article.Article"
+                            "$ref": "#/definitions/article.ArticleResponseDto"
                         }
                     },
                     "404": {
@@ -111,6 +126,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "tags"
+                ],
                 "summary": "get all tags",
                 "operationId": "get-all-tags",
                 "responses": {
@@ -125,6 +143,9 @@ const docTemplate = `{
             "post": {
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "tags"
                 ],
                 "summary": "add a new tag",
                 "operationId": "create-tag",
@@ -154,13 +175,75 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/tags/{name}/date/{date}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tags"
+                ],
+                "summary": "get tags by name and datte",
+                "operationId": "get-tags-by-name-and-date",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "tag name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "date",
+                        "name": "date",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/tag.Tag"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
-        "article.Article": {
+        "article.ArticleCreateDto": {
             "type": "object",
             "properties": {
                 "body": {
+                    "type": "string",
+                    "example": "Article Body"
+                },
+                "date": {
+                    "type": "string",
+                    "example": "2022-04-23T00:00:00Z"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/article.TagDto"
+                    }
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Article Title"
+                }
+            }
+        },
+        "article.ArticleResponseDto": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "string"
+                },
+                "createdAt": {
                     "type": "string"
                 },
                 "date": {
@@ -168,6 +251,12 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/tag.Tag"
+                    }
                 },
                 "title": {
                     "type": "string"
@@ -177,14 +266,11 @@ const docTemplate = `{
                 }
             }
         },
-        "article.ArticleCreateDto": {
+        "article.TagDto": {
             "type": "object",
             "properties": {
-                "body": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
+                "id": {
+                    "type": "integer"
                 }
             }
         },
